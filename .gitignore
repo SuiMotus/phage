@@ -1,0 +1,11 @@
+target/
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+dist/
+build/
+.phage/
+*.log
+*.pem
+*.key
