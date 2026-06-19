@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package phage;
+
+service PhageCoordinator {
+  rpc Register(NodeInfo) returns (RegistrationResponse);
+  rpc Heartbeat(HeartbeatRequest) returns (HeartbeatResponse);
+  rpc FetchTask(TaskRequest) returns (TaskAssignment);
+  rpc SubmitResult(TaskResult) returns (ResultAck);
+  rpc ReportMetrics(NodeMetrics) returns (MetricsAck);
+}
+
+message NodeInfo {
+  string hostname = 1;
+  string gpu_model = 2;
+  uint64 vram_bytes = 3;
+  string driver_version = 4;
+  string cuda_version = 5;
+  string os = 6;
+}
+
+message RegistrationResponse {
+  string node_id = 1;
+  bytes client_cert = 2;
+  bytes client_key = 3;
+  bytes ca_cert = 4;
+}
+
+message HeartbeatRequest {
+  string node_id = 1;
+  float gpu_utilization = 2;
+  uint64 vram_used_bytes = 3;
+  uint32 gpu_temp_c = 4;
+  uint32 active_tasks = 5;
+  string model_loaded = 6;
+}
+
+message HeartbeatResponse {
+  bool acknowledged = 1;
+  string load_model = 2;  // empty = no change
+}
+
+message TaskRequest {
+  string node_id = 1;
+  string model_loaded = 2;
+  uint64 vram_available_bytes = 3;
+}
+
+message TaskAssignment {
+  string task_id = 1;
+  string prompt = 2;
+  bytes workspace_tar = 3;
+  string verifier_cmd = 4;
+  string model = 5;
+  float temperature = 6;
+  uint32 max_tokens = 7;
+  uint32 max_steps = 8;
+}
+
+message TaskResult {
+  string task_id = 1;
+  string node_id = 2;
+  bool passed = 3;
+  string output = 4;
+  bytes sandbox_attestation = 5;
+  uint64 completion_tokens = 6;
+  uint32 wall_clock_ms = 7;
+  uint32 steps = 8;
+}
+
+message ResultAck {
+  bool accepted = 1;
+  string reason = 2;
+}
+
+message NodeMetrics {
+  string node_id = 1;
+  float inference_tokens_per_sec = 2;
+  uint32 tasks_completed = 3;
+  uint32 tasks_failed = 4;
+  uint64 uptime_sec = 5;
+}
+
+message MetricsAck {
+  bool ok = 1;
+}
