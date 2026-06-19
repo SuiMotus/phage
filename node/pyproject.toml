@@ -1,0 +1,14 @@
+[project]
+name = "phage-node"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "grpcio>=1.60",
+    "grpcio-tools>=1.60",
+    "pynvml>=11.5",
+    "toml>=0.10",
+    "vllm>=0.4",
+]
+
+[project.scripts]
+phage-node = "phage_node.cli:main"
