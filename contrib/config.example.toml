@@ -1,0 +1,26 @@
+# phage-node configuration
+# copy to ~/.phage/config.toml
+
+[coordinator]
+url = "https://coordinator.phage.dev:9090"
+
+[gpu]
+device = 0            # CUDA device index
+max_vram_pct = 85     # max VRAM usage before rejecting tasks
+
+[sandbox]
+runtime = "gvisor"    # "gvisor" or "runc" (gvisor recommended)
+max_runtime_sec = 300  # kill tasks after this many seconds
+scratch_dir = "/tmp/phage/scratch"
+
+[vllm]
+port = 8400
+gpu_memory_utilization = 0.80
+max_model_len = 8192  # context window
+
+[heartbeat]
+interval_sec = 10     # how often to ping the coordinator
+
+[logging]
+level = "info"        # debug, info, warn, error
+file = "~/.phage/phage-node.log"

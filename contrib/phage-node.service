@@ -1,0 +1,22 @@
+[Unit]
+Description=phage node daemon
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=%i
+ExecStart=/usr/local/bin/phage-node start
+Restart=on-failure
+RestartSec=10
+Environment=CUDA_VISIBLE_DEVICES=0
+
+# security
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/.phage /tmp/phage
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
