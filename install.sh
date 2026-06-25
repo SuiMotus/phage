@@ -68,7 +68,7 @@ mkdir -p "$PHAGE_DIR/certs"
 if [ ! -f "$PHAGE_DIR/config.toml" ]; then
     cat > "$PHAGE_DIR/config.toml" << 'EOF'
 [coordinator]
-url = "https://coordinator.phage.dev:9090"
+url = "https://coordinator.kellphage.com:9090"
 
 [gpu]
 device = 0
