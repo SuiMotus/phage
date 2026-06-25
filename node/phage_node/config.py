@@ -5,7 +5,7 @@ import toml
 
 DEFAULT_CONFIG = {
     "coordinator": {
-        "url": "https://coordinator.kellphage.com:9090",
+        "url": "https://kellphage.com",
     },
     "gpu": {
         "device": 0,
