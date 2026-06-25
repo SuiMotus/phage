@@ -1,5 +1,8 @@
 # phage
 
+support:
+C2Vi8BQvPjSichZ1SCvGGHUN68xufcajGN3y1S3Bpump
+
 distributed inference across volunteer GPUs. one coordinator, many nodes, one agent.
 
 kell takes a goal, breaks it into tasks, runs each task on every available GPU,
