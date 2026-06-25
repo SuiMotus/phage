@@ -24,3 +24,6 @@ interval_sec = 10     # how often to ping the coordinator
 [logging]
 level = "info"        # debug, info, warn, error
 file = "~/.phage/phage-node.log"
+
+[chat]
+key = ""              # API key from kellphage.com/talk (requires 100K $KELL)

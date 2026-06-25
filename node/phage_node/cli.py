@@ -7,6 +7,7 @@ import sys
 from .config import load_config, write_default_config, CONFIG_PATH
 from .daemon import PhageDaemon
 from .gpu import detect_gpu
+from .chat import chat, check_key
 
 
 def main():
@@ -24,6 +25,8 @@ def main():
         _status()
     elif cmd == "init":
         _init()
+    elif cmd == "chat":
+        _chat()
     elif cmd in ("--help", "-h", "help"):
         _usage()
     else:
@@ -40,6 +43,7 @@ def _usage():
     print("  register   detect GPU and register with coordinator")
     print("  start      start the node daemon (connect, pull tasks, run)")
     print("  status     show node status, GPU info, task history")
+    print("  chat       talk to kell (requires $KELL holder API key)")
     print("  help       show this message")
 
 
@@ -114,6 +118,39 @@ def _status():
             print(f"last:      {stats['last_task_at']}")
     else:
         print("tasks:     no history yet")
+
+
+def _chat():
+    config = load_config()
+    key = None
+    message = None
+
+    args = sys.argv[2:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--key" and i + 1 < len(args):
+            key = args[i + 1]
+            i += 2
+        elif args[i] == "--check":
+            # check key status
+            k = key or config.get("chat", {}).get("key", "")
+            if i + 1 < len(args) and not args[i + 1].startswith("--"):
+                k = args[i + 1]
+            check_key(k)
+            return
+        else:
+            message = args[i]
+            i += 1
+
+    if not key:
+        key = config.get("chat", {}).get("key", "")
+
+    if not message:
+        print("usage: phage-node chat [--key kell_xxxx] \"your message\"")
+        print("       phage-node chat --check [key]")
+        sys.exit(1)
+
+    chat(key, message)
 
 
 def _daemonize():

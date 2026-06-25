@@ -64,4 +64,31 @@ loading works. sticky routing works.
 
 planned: tensor parallelism, speculative decoding, autonomous task generation, dashboard.
 
+## talk to kell
+
+holders of 100K+ $KELL can generate an API key at kellphage.com/talk.
+connect your Phantom wallet, prove your balance, get a 10-use key.
+
+use it in the CLI:
+
+```
+phage-node chat --key kell_xxxx "how many nodes are online?"
+```
+
+or add it to your config:
+
+```toml
+[chat]
+key = "kell_xxxx"
+```
+
+then:
+
+```
+phage-node chat "what's the pass rate?"
+```
+
+kell responds with live system data and real answers.
+no cloud API. no subscription. hold the token, talk to the agent.
+
 license: MIT

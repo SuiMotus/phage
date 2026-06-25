@@ -29,6 +29,9 @@ DEFAULT_CONFIG = {
         "level": "info",
         "file": "~/.phage/phage-node.log",
     },
+    "chat": {
+        "key": "",
+    },
 }
 
 CONFIG_PATH = os.path.expanduser("~/.phage/config.toml")
